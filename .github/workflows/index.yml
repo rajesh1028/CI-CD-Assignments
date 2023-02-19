@@ -1,13 +1,18 @@
-name: Print Node Version
+name: ESLint Check
 on:
   push:
+    branches:
+      - main
 jobs:
-  print-version:
+  eslint-check:
     runs-on: ubuntu-latest
     steps:
-      - name: Install Node.js
+      - name: Checkout code
+        uses: actions/checkout@v2
+      - name: Install Node.js and ESLint
         uses: actions/setup-node@v2
         with:
-          node-version: "14.x"
-      - name: Print Node Version
-        run: node -v
+          node-version: '14.x'
+      - run: npm install eslint
+      - name: Run ESLint
+        run: npx eslint .
